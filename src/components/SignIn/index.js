@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
-import { SignUpLink } from "../SignUp";
-import { PasswordForgetLink } from "../PasswordForget";
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
+import SignInComponent from "./SignInComponent";
 
 const SignInPage = () => (
     <div>
-        <h1>SignIn</h1>
         <SignInForm />
-        <PasswordForgetLink />
-        <SignUpLink />
     </div>
 );
 
@@ -45,27 +41,16 @@ class SignInFormBase extends Component {
     render() {
         const { email, password, error } = this.state;
         const isInvalid = password === "" || email === "";
+
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
-                    name="email"
-                    value={email}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <input
-                    name="password"
-                    value={password}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Password"
-                />
-                <button disabled={isInvalid} type="submit">
-                    Sign In
-                </button>
-                {error && <p>{error.message}</p>}
-            </form>
+            <SignInComponent
+                email={email}
+                password={password}
+                isInvalid={isInvalid}
+                error={error}
+                onSubmit={this.onSubmit}
+                onChange={this.onChange}
+            />
         );
     }
 }

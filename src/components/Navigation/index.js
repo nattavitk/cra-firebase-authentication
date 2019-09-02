@@ -1,49 +1,148 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { makeStyles } from "@material-ui/core/styles";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
+import MenuIcon from "@material-ui/icons/Menu";
+
 import SignOutButton from "../SignOut";
 import * as ROUTES from "../../constants/routes";
 import { AuthUserContext } from "../Session";
 
-const Navigation = ({ authUser }) => (
-    <div>
-        <AuthUserContext.Consumer>
-            {authUser =>
-                authUser ? <NavigationAuth /> : <NavigationNonAuth />
-            }
-        </AuthUserContext.Consumer>
-    </div>
-);
+const useStyles = makeStyles({
+    root: {
+        height: "5vh"
+    },
+    list: {
+        width: 250
+    },
+    fullList: {
+        width: "auto"
+    }
+});
+
+const Navigation = () => {
+    const classes = useStyles();
+    const [state, setState] = React.useState({
+        top: false,
+        left: false,
+        bottom: false,
+        right: false
+    });
+
+    const toggleDrawer = (side, open) => event => {
+        if (
+            event &&
+            event.type === "keydown" &&
+            (event.key === "Tab" || event.key === "Shift")
+        ) {
+            return;
+        }
+
+        setState({ ...state, [side]: open });
+    };
+
+    const sideList = side => (
+        <div
+            className={classes.list}
+            role="presentation"
+            onClick={toggleDrawer(side, false)}
+            onKeyDown={toggleDrawer(side, false)}
+        >
+            <AuthUserContext.Consumer>
+                {authUser =>
+                    authUser ? <NavigationAuth /> : <NavigationNonAuth />
+                }
+            </AuthUserContext.Consumer>
+        </div>
+    );
+
+    return (
+        <div className={classes.root}>
+            <Button onClick={toggleDrawer("left", true)}>
+                <MenuIcon />
+            </Button>
+            <SwipeableDrawer
+                open={state.left}
+                onClose={toggleDrawer("left", false)}
+                onOpen={toggleDrawer("left", true)}
+            >
+                {sideList("left")}
+            </SwipeableDrawer>
+        </div>
+    );
+};
+
+const NavAuth = [
+    {
+        to: ROUTES.LANDING,
+        title: "Landing",
+        icon: <InboxIcon />
+    },
+    {
+        to: ROUTES.HOME,
+        title: "Home",
+        icon: <InboxIcon />
+    },
+    {
+        to: ROUTES.ACCOUNT,
+        title: "Account",
+        icon: <InboxIcon />
+    },
+    {
+        to: ROUTES.ADMIN,
+        title: "Admin",
+        icon: <InboxIcon />
+    }
+];
+
+const NavNonAuth = [
+    {
+        to: ROUTES.LANDING,
+        title: "Landing",
+        icon: <InboxIcon />
+    },
+    {
+        to: ROUTES.SIGN_IN,
+        title: "Sign In",
+        icon: <MailIcon />
+    }
+];
 
 const NavigationAuth = () => (
-    <ul>
-        <li>
-            <Link to={ROUTES.LANDING}>Landing</Link>
-        </li>
-        <li>
-            <Link to={ROUTES.HOME}>Home</Link>
-        </li>
-        <li>
-            <Link to={ROUTES.ACCOUNT}>Account</Link>
-        </li>
-        <li>
-            <Link to={ROUTES.ADMIN}>Admin</Link>
-        </li>
-        <li>
-            <SignOutButton />
-        </li>
-    </ul>
+    <>
+        <List>
+            {NavAuth.map((item, index) => (
+                <ListItem button key={item.title} to={item.to} component={Link}>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.title} />
+                </ListItem>
+            ))}
+        </List>
+        <Divider />
+        <SignOutButton />
+    </>
 );
 
 const NavigationNonAuth = () => (
-    <ul>
-        <li>
-            <Link to={ROUTES.LANDING}>Landing</Link>
-        </li>
-        <li>
-            <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-        </li>
-    </ul>
+    <>
+        <List>
+            {NavNonAuth.map((item, index) => (
+                <ListItem button key={item.title} to={item.to} component={Link}>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.title} />
+                </ListItem>
+            ))}
+        </List>
+    </>
 );
 
 export default Navigation;
