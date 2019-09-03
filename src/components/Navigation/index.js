@@ -14,9 +14,9 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 
-import SignOutButton from "../SignOut";
+import SignOutButton from "../UserManagement/SignOut";
 import * as ROUTES from "../../constants/routes";
-import { AuthUserContext } from "../Session";
+import { AuthUserContext } from "../UserManagement/Session";
 
 const useStyles = makeStyles({
     root: {

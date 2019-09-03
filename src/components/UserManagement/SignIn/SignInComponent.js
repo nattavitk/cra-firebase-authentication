@@ -56,6 +56,9 @@ const useStyles = makeStyles(theme => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2)
+    },
+    textField: {
+        background: "white"
     }
 }));
 
@@ -107,6 +110,7 @@ const SignInComponent = ({
                             autoFocus
                             value={email}
                             onChange={onChange}
+                            className={classes.textField}
                         />
                         <TextField
                             variant="outlined"
@@ -120,6 +124,7 @@ const SignInComponent = ({
                             autoComplete="current-password"
                             value={password}
                             onChange={onChange}
+                            className={classes.textField}
                         />
                         {error && <p>{error.message}</p>}
                         <Button
