@@ -28,13 +28,17 @@ const Copyright = () => {
 
 const useStyles = makeStyles(theme => ({
     root: {
-        height: "95vh"
+        height: "100vh"
     },
     image: {
         backgroundImage: "url(https://source.unsplash.com/random)",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center"
+    },
+    paperBg: {
+        background: "linear-gradient(-45deg, #fff 30%, #98DDDE 90%)",
+        boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)"
     },
     paper: {
         margin: theme.spacing(8, 4),
@@ -77,6 +81,7 @@ const SignInComponent = ({
                 component={Paper}
                 elevation={6}
                 square
+                className={classes.paperBg}
             >
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>

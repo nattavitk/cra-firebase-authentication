@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
+import { styled } from "@material-ui/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
@@ -19,7 +20,9 @@ import { AuthUserContext } from "../Session";
 
 const useStyles = makeStyles({
     root: {
-        height: "5vh"
+        height: "5vh",
+        position: "fixed",
+        "z-index": 20
     },
     list: {
         width: 250
@@ -27,6 +30,12 @@ const useStyles = makeStyles({
     fullList: {
         width: "auto"
     }
+});
+
+const MenuButton = styled(Button)({
+    color: "white",
+    height: 48,
+    padding: "0 30px"
 });
 
 const Navigation = () => {
@@ -67,9 +76,9 @@ const Navigation = () => {
 
     return (
         <div className={classes.root}>
-            <Button onClick={toggleDrawer("left", true)}>
+            <MenuButton onClick={toggleDrawer("left", true)}>
                 <MenuIcon />
-            </Button>
+            </MenuButton>
             <SwipeableDrawer
                 open={state.left}
                 onClose={toggleDrawer("left", false)}
