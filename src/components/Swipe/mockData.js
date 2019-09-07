@@ -1,13 +1,12 @@
 export default [
     {
         pics: [
-            "https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fblog.pawstruck.com%2Fwp-content%2Fuploads%2F2016%2F01%2Fpuppy-dog-eyes.jpg&f=1"
+            "https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fmaxcdn.icons8.com%2Fapp%2Fuploads%2F2016%2F07%2Fboarding-pass-redesigned.png&f=1&nofb=1"
         ],
-        name: "Heather",
-        age: 32,
-        distance: "4 miles away",
-        text:
-            "My nickname is Gilette because I'm the best a man can get. Also I will cut you."
+        name: "Flight to Manila",
+        age: "SG 214",
+        distance: "Singapore airlines",
+        text: "Delay"
     }
     // {
     //     pics: [

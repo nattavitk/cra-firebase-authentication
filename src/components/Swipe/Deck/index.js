@@ -16,12 +16,13 @@ const to = i => ({
 });
 const from = i => ({ rot: 0, scale: 1.5, y: -1000 });
 
+// Rotate
 // const trans = (r, s) =>
 //     `perspective(1500px) rotateX(30deg) rotateY(${r /
 //         10}deg) rotateZ(${r}deg) scale(${s})`;
 
 const trans = (r, s) =>
-    `perspective(1500px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${s})`; // Not rorate the card
+    `perspective(1500px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(${s})`; // Not rotate the card
 
 function Deck() {
     const [gone] = useState(() => new Set());
@@ -41,10 +42,12 @@ function Deck() {
             velocity
         }) => {
             const trigger = velocity > 0.2;
-
             const dir = xDir < 0 ? -1 : 1;
 
-            if (!down && trigger) gone.add(index);
+            if (!down && trigger) {
+                gone.add(index);
+                console.log(`Swiped ${index} to ${dir > 0 ? "Yes" : "No"}`);
+            }
 
             set(i => {
                 if (index !== i) return;
@@ -59,6 +62,7 @@ function Deck() {
                 const rot = xDelta / 100 + (isGone ? dir * 10 * velocity : 0);
 
                 const scale = down ? 1.1 : 1;
+
                 return {
                     x,
                     rot,
@@ -78,6 +82,7 @@ function Deck() {
 
     return props.map(({ x, y, rot, scale }, i) => (
         <Card
+            key={i}
             i={i}
             x={x}
             y={y}
